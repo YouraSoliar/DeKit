@@ -187,6 +187,11 @@ public class MainActivity extends AppCompatActivity {
             Category output = probability.get(index);
             linearLayoutResult.setVisibility(View.VISIBLE);
             textViewResult.setText(output.getLabel());
+            if (!output.getLabel().toString().equals("None")) {
+                textViewSave.setVisibility(View.VISIBLE);
+            } else {
+                textViewSave.setVisibility(View.GONE);
+            }
             // Releases model resources if no longer used.
             model.close();
         } catch (IOException e) {
