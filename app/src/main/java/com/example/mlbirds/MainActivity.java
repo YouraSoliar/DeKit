@@ -9,16 +9,23 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
+import android.app.ActionBar;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.mlbirds.ml.BirdsModel;
@@ -34,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
     private Button buttonLoadPhoto;
     private Button buttonTakePhoto;
     private TextView textViewResult;
+    private LinearLayout linearLayoutResult;
     private ImageView imageBird;
     private Bitmap imageBitmap;
     ActivityResultLauncher<Intent> activityResultLauncher;
@@ -43,7 +51,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         getPermission();
 
         initView();
@@ -54,7 +61,9 @@ public class MainActivity extends AppCompatActivity {
         this.buttonLoadPhoto = findViewById(R.id.buttonLoadPhoto);
         this.buttonTakePhoto = findViewById(R.id.buttonTakePhoto);
         this.textViewResult = findViewById(R.id.textViewResult);
+        this.linearLayoutResult = findViewById(R.id.linearLayoutResult);
         this.imageBird = findViewById(R.id.imageBird);
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.green)));
     }
 
     private void initAction() {
@@ -129,6 +138,22 @@ public class MainActivity extends AppCompatActivity {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.next_page) {
+            startActivity(StorageActivity.getIntent(this));
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     private void outputGenerator(Bitmap imageBitmap) {
         try {
             BirdsModel model = BirdsModel.newInstance(MainActivity.this);
@@ -151,7 +176,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
             Category output = probability.get(index);
-
+            linearLayoutResult.setVisibility(View.VISIBLE);
             textViewResult.setText(output.getLabel());
             // Releases model resources if no longer used.
             model.close();

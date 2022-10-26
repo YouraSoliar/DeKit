@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="@color/gray"
+    android:background="@color/white"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
@@ -12,7 +12,7 @@
         android:layout_width="300dp"
         android:layout_height="350dp"
         android:layout_centerHorizontal="true"
-        android:src="@drawable/ic_baseline_image_search_24" />
+        android:src="@drawable/search_bird" />
 
     <LinearLayout
         android:id="@+id/ll_button"
@@ -29,7 +29,7 @@
             android:layout_weight="1"
             android:textColor="@color/white"
             android:text="@string/load_image"
-            android:background="@color/purple_500"
+            android:background="@color/blue"
             android:layout_margin="10dp"/>
 
         <androidx.appcompat.widget.AppCompatButton
@@ -38,7 +38,7 @@
             android:layout_margin="10dp"
             android:layout_weight="1"
             android:visibility="visible"
-            android:background="@color/purple_500"
+            android:background="@color/blue"
             android:textColor="@color/white"
             android:text="@string/capture_image"
             android:layout_height="wrap_content"/>
@@ -46,10 +46,12 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/linearLayoutResult"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/ll_button"
         android:layout_margin="10dp"
+        android:visibility="visible"
         android:orientation="vertical">
 
         <LinearLayout
@@ -61,7 +63,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
-                android:text="@string/output"
+                android:text="@string/result"
                 android:textColor="@color/black"
                 android:textSize="20sp"
                 android:textStyle="bold"/>
@@ -71,9 +73,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/result"
                 android:textSize="20sp"
-                android:textColor="@color/purple_200"
+                android:textColor="@color/green"
                 android:padding="10dp"/>
 
         </LinearLayout>
@@ -91,5 +92,20 @@
 
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/textViewSave"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="30dp"
+        android:background="@color/orange"
+        android:text="@string/save"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="40dp"
+        android:textColor="@color/white"
+        android:textSize="20sp" />
 
 </RelativeLayout>
