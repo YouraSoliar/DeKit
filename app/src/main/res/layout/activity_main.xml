@@ -51,7 +51,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/ll_button"
         android:layout_margin="10dp"
-        android:visibility="visible"
+        android:visibility="gone"
         android:orientation="vertical">
 
         <LinearLayout
@@ -100,11 +100,11 @@
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="30dp"
         android:background="@color/orange"
-        android:text="@string/save"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
         android:paddingLeft="20dp"
+        android:paddingTop="10dp"
         android:paddingRight="40dp"
+        android:paddingBottom="10dp"
+        android:text="@string/save"
         android:textColor="@color/white"
         android:textSize="20sp" />
 

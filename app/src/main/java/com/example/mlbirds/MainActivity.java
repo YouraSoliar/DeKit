@@ -40,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
 
     private Button buttonLoadPhoto;
     private Button buttonTakePhoto;
+    private TextView textViewSave;
     private TextView textViewResult;
     private LinearLayout linearLayoutResult;
     private ImageView imageBird;
@@ -61,6 +62,7 @@ public class MainActivity extends AppCompatActivity {
         this.buttonLoadPhoto = findViewById(R.id.buttonLoadPhoto);
         this.buttonTakePhoto = findViewById(R.id.buttonTakePhoto);
         this.textViewResult = findViewById(R.id.textViewResult);
+        this.textViewSave = findViewById(R.id.textViewSave);
         this.linearLayoutResult = findViewById(R.id.linearLayoutResult);
         this.imageBird = findViewById(R.id.imageBird);
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.green)));
@@ -105,6 +107,13 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 startActivityForResult(intent, 12);
+            }
+        });
+
+        textViewSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
             }
         });
     }
