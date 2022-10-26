@@ -1,13 +1,16 @@
 package com.example.mlbirds;
 
-import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContract;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
@@ -28,10 +31,11 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Button btLoadImage;
-    private Button btCaptureImage;
-    private TextView tvResult;
-    ImageView ivAddImage;
+    private Button buttonLoadPhoto;
+    private Button buttonTakePhoto;
+    private TextView textViewResult;
+    private ImageView imageBird;
+    private Bitmap imageBitmap;
     ActivityResultLauncher<Intent> activityResultLauncher;
     ActivityResultLauncher<String> mGetContent;
 
@@ -40,15 +44,17 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        getPermission();
+
         initView();
         initAction();
     }
 
     private void initView() {
-        btLoadImage = findViewById(R.id.bt_load_image);
-        btCaptureImage = findViewById(R.id.bt_capture_image);
-        tvResult = findViewById(R.id.tv_result);
-        ivAddImage = findViewById(R.id.iv_add_image);
+        this.buttonLoadPhoto = findViewById(R.id.buttonLoadPhoto);
+        this.buttonTakePhoto = findViewById(R.id.buttonTakePhoto);
+        this.textViewResult = findViewById(R.id.textViewResult);
+        this.imageBird = findViewById(R.id.imageBird);
     }
 
     private void initAction() {
@@ -56,41 +62,71 @@ public class MainActivity extends AppCompatActivity {
         mGetContent = registerForActivityResult(new ActivityResultContracts.GetContent(), new ActivityResultCallback<Uri>() {
             @Override
             public void onActivityResult(Uri result) {
-                Bitmap imageBitmap = null;
+                imageBitmap = null;
                 try{
                     imageBitmap = UriToBitmap(result);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
 
-                ivAddImage.setImageBitmap(imageBitmap);
+                imageBird.setImageBitmap(imageBitmap);
                 outputGenerator(imageBitmap);
 
                 Log.d("TAG_URI", result + "");
             }
         });
 
-        btLoadImage.setOnClickListener(new View.OnClickListener() {
+        buttonLoadPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 mGetContent.launch("image/*");
             }
         });
 
-        tvResult.setOnClickListener(new View.OnClickListener() {
+        textViewResult.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.google.com/search?q=" + tvResult.getText().toString()));
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.google.com/search?q=" + textViewResult.getText().toString()));
                 startActivity(intent);
             }
         });
 
-        btCaptureImage.setOnClickListener(new View.OnClickListener() {
+        buttonTakePhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                startActivityForResult(intent, 12);
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (requestCode == 12) {
+            imageBitmap = (Bitmap) data.getExtras().get("data");
+            imageBird.setImageBitmap(imageBitmap);
+            Bitmap bmp = imageBitmap.copy(Bitmap.Config.ARGB_8888,true) ;
+            outputGenerator(bmp);
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    private void getPermission() {
+        if (checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.CAMERA}, 11);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode == 11) {
+            if (grantResults.length > 0) {
+                if (grantResults[0] != PackageManager.PERMISSION_GRANTED) {
+                    this.getPermission();
+                }
+            }
+        }
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
     private void outputGenerator(Bitmap imageBitmap) {
@@ -116,11 +152,11 @@ public class MainActivity extends AppCompatActivity {
 
             Category output = probability.get(index);
 
-            tvResult.setText(output.getLabel());
+            textViewResult.setText(output.getLabel());
             // Releases model resources if no longer used.
             model.close();
         } catch (IOException e) {
-            // TODO Handle the exception
+            e.printStackTrace();
         }
 
     }

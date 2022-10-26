@@ -8,11 +8,11 @@
     tools:context=".MainActivity">
 
     <ImageView
-        android:id="@+id/iv_add_image"
+        android:id="@+id/imageBird"
         android:layout_width="300dp"
         android:layout_height="350dp"
         android:layout_centerHorizontal="true"
-        android:src="@drawable/ic_baseline_image_search_24"/>
+        android:src="@drawable/ic_baseline_image_search_24" />
 
     <LinearLayout
         android:id="@+id/ll_button"
@@ -20,10 +20,10 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_marginTop="10dp"
-        android:layout_below="@id/iv_add_image">
+        android:layout_below="@id/imageBird">
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/bt_load_image"
+            android:id="@+id/buttonLoadPhoto"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -33,7 +33,7 @@
             android:layout_margin="10dp"/>
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/bt_capture_image"
+            android:id="@+id/buttonTakePhoto"
             android:layout_width="match_parent"
             android:layout_margin="10dp"
             android:layout_weight="1"
@@ -67,7 +67,7 @@
                 android:textStyle="bold"/>
 
             <TextView
-                android:id="@+id/tv_result"
+                android:id="@+id/textViewResult"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
