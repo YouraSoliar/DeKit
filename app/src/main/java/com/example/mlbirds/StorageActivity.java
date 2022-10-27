@@ -12,8 +12,13 @@ import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -27,6 +32,8 @@ public class StorageActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_storage);
+        birdsDatabase = BirdsDatabase.getInstance(getApplication());
+
         initView();
         initAction();
     }
@@ -48,13 +55,14 @@ public class StorageActivity extends AppCompatActivity {
                 adapter.setBirds(birds);
             }
         });
-
     }
 
     private void initAction() {
         adapter.setOnNoteClickListener(new BirdsAdapter.OnNoteClickListener() {
             @Override
             public void onNoteClick(Bird bird) {
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.google.com/search?q=" + bird.getUrl().toString()));
+                startActivity(intent);
             }
         });
 
@@ -67,7 +75,7 @@ public class StorageActivity extends AppCompatActivity {
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
                 int position = viewHolder.getAdapterPosition();
-                Bird bird = adapter.getNotes().get(position);
+                Bird bird = adapter.getBirds().get(position);
 
                 Thread thread = new Thread(new Runnable() {
                     @Override

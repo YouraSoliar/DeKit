@@ -25,9 +25,10 @@ public class BirdsAdapter extends RecyclerView.Adapter<BirdsAdapter.BirdsViewHol
 
     public void setBirds(List<Bird> birds) {
         this.birds = birds;
+        notifyDataSetChanged();
     }
 
-    public List<Bird> getNotes() {
+    public List<Bird> getBirds() {
         return new ArrayList<>(birds);
     }
 
@@ -44,6 +45,13 @@ public class BirdsAdapter extends RecyclerView.Adapter<BirdsAdapter.BirdsViewHol
 
         holder.textViewItem.setText(bird.getUrl());
         //holder.imageViewItem.setImageBitmap(bird.getBitmapBird());
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onNoteClickListener.onNoteClick(bird);
+            }
+        });
     }
 
     @Override
@@ -66,6 +74,6 @@ public class BirdsAdapter extends RecyclerView.Adapter<BirdsAdapter.BirdsViewHol
     }
 
     interface OnNoteClickListener {
-        void onNoteClick(Bird note);
+        void onNoteClick(Bird bird);
     }
 }

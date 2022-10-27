@@ -17,6 +17,8 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.Menu;
@@ -27,6 +29,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.mlbirds.ml.BirdsModel;
 
@@ -45,7 +48,8 @@ public class MainActivity extends AppCompatActivity {
     private LinearLayout linearLayoutResult;
     private ImageView imageBird;
     private Bitmap imageBitmap;
-    private BirdsDao birdsDao;
+    private BirdsDatabase birdsDatabase;
+    private Handler handler = new Handler(Looper.getMainLooper());
     ActivityResultLauncher<Intent> activityResultLauncher;
     ActivityResultLauncher<String> mGetContent;
 
@@ -54,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         getPermission();
+        birdsDatabase = BirdsDatabase.getInstance(getApplication());
 
         initView();
         initAction();
@@ -67,6 +72,7 @@ public class MainActivity extends AppCompatActivity {
         this.linearLayoutResult = findViewById(R.id.linearLayoutResult);
         this.imageBird = findViewById(R.id.imageBird);
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.green)));
+
     }
 
     private void initAction() {
@@ -140,7 +146,14 @@ public class MainActivity extends AppCompatActivity {
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
-                birdsDao.add(new Bird(textViewResult.getText().toString()));
+                birdsDatabase.birdsDao().add(new Bird(textViewResult.getText().toString()));
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(MainActivity.this, "Saved", Toast.LENGTH_SHORT).show();
+                        textViewSave.setVisibility(View.GONE);
+                    }
+                });
             }
         });
         thread.start();
