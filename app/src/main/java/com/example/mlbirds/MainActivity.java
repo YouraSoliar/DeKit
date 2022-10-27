@@ -12,6 +12,7 @@ import android.Manifest;
 import android.app.ActionBar;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.CursorWindow;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -39,6 +40,7 @@ import org.tensorflow.lite.support.label.Category;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.Field;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -60,6 +62,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         getPermission();
+        compressPNG();
         birdsDatabase = BirdsDatabase.getInstance(getApplication());
 
         initView();
@@ -75,6 +78,17 @@ public class MainActivity extends AppCompatActivity {
         this.imageBird = findViewById(R.id.imageBird);
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.green)));
 
+    }
+
+    private void compressPNG() {
+    //this method for compressing and storing png images such as that format has too long converted row
+        try {
+            Field field = CursorWindow.class.getDeclaredField("sCursorWindowSize");
+            field.setAccessible(true);
+            field.set(null, 100 * 1024 * 1024); //the 100MB is the new size
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void initAction() {
