@@ -45,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
     private LinearLayout linearLayoutResult;
     private ImageView imageBird;
     private Bitmap imageBitmap;
+    private BirdsDao birdsDao;
     ActivityResultLauncher<Intent> activityResultLauncher;
     ActivityResultLauncher<String> mGetContent;
 
@@ -113,7 +114,7 @@ public class MainActivity extends AppCompatActivity {
         textViewSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                saveBird();
             }
         });
     }
@@ -133,6 +134,16 @@ public class MainActivity extends AppCompatActivity {
         if (checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.CAMERA}, 11);
         }
+    }
+
+    private void saveBird() {
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                birdsDao.add(new Bird(textViewResult.getText().toString()));
+            }
+        });
+        thread.start();
     }
 
     @Override

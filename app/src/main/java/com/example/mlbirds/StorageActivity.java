@@ -3,6 +3,9 @@ package com.example.mlbirds;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.recyclerview.widget.ItemTouchHelper;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.content.Intent;
@@ -12,13 +15,20 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.MenuItem;
 
+import java.util.List;
+
 public class StorageActivity extends AppCompatActivity {
+
+    private RecyclerView recyclerViewBirds;
+    private BirdsAdapter adapter;
+    private BirdsDatabase birdsDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_storage);
         initView();
+        initAction();
     }
 
     private void initView() {
@@ -28,6 +38,48 @@ public class StorageActivity extends AppCompatActivity {
         final Drawable upArrow = getResources().getDrawable(R.drawable.ic_baseline_arrow_back_24);
         upArrow.setColorFilter(getResources().getColor(R.color.black), PorterDuff.Mode.SRC_ATOP);
         getSupportActionBar().setHomeAsUpIndicator(upArrow);
+        this.recyclerViewBirds = findViewById(R.id.recyclerViewBirds);
+        adapter = new BirdsAdapter();
+        recyclerViewBirds.setAdapter(adapter);
+
+        birdsDatabase.birdsDao().getBirds().observe(this, new Observer<List<Bird>>() {
+            @Override
+            public void onChanged(List<Bird> birds) {
+                adapter.setBirds(birds);
+            }
+        });
+
+    }
+
+    private void initAction() {
+        adapter.setOnNoteClickListener(new BirdsAdapter.OnNoteClickListener() {
+            @Override
+            public void onNoteClick(Bird bird) {
+            }
+        });
+
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+                int position = viewHolder.getAdapterPosition();
+                Bird bird = adapter.getNotes().get(position);
+
+                Thread thread = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        birdsDatabase.birdsDao().remove(bird.getId());
+                    }
+                });
+                thread.start();
+            }
+        });
+
+        itemTouchHelper.attachToRecyclerView(recyclerViewBirds);
     }
 
     @Override

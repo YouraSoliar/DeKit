@@ -7,4 +7,14 @@
     android:background="@color/white"
     tools:context=".StorageActivity">
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewBirds"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:itemCount="13"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="-128dp"
+        tools:listitem="@layout/bird_item" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
