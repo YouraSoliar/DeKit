@@ -44,7 +44,7 @@ public class BirdsAdapter extends RecyclerView.Adapter<BirdsAdapter.BirdsViewHol
         Bird bird = birds.get(position);
 
         holder.textViewItem.setText(bird.getUrl());
-        //holder.imageViewItem.setImageBitmap(bird.getBitmapBird());
+        holder.imageViewItem.setImageBitmap(Converter.toBitmap(bird.getStringBitmap()));
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

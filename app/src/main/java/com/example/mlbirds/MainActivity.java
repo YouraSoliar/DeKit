@@ -13,6 +13,7 @@ import android.app.ActionBar;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
@@ -37,6 +38,7 @@ import org.tensorflow.lite.support.image.TensorImage;
 import org.tensorflow.lite.support.label.Category;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -146,7 +148,8 @@ public class MainActivity extends AppCompatActivity {
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
-                birdsDatabase.birdsDao().add(new Bird(textViewResult.getText().toString()));
+                String imageSource = Converter.fromBitmap(imageBitmap);
+                birdsDatabase.birdsDao().add(new Bird(textViewResult.getText().toString(), imageSource));
                 handler.post(new Runnable() {
                     @Override
                     public void run() {

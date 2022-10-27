@@ -12,17 +12,17 @@ public class Bird {
     @PrimaryKey(autoGenerate = true)
     private int id;
     private String url;
-    //private Bitmap bitmapBird;
+    private String stringBitmap;
 
-    public Bird(int id, String url) {
+    public Bird(int id, String url, String stringBitmap) {
         this.id = id;
         this.url = url;
-        //this.bitmapBird = bitmapBird;
+        this.stringBitmap = stringBitmap;
     }
 
     @Ignore
-    public Bird(String url) {
-        this(0, url);
+    public Bird(String url, String bitmapBird) {
+        this(0, url, bitmapBird);
     }
 
     public int getId() {
@@ -33,7 +33,7 @@ public class Bird {
         return url;
     }
 
-//    public Bitmap getBitmapBird() {
-//        return bitmapBird;
-//    }
+    public String getStringBitmap() {
+        return stringBitmap;
+    }
 }
