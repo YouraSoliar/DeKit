@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -26,13 +27,13 @@ public class StorageActivity extends AppCompatActivity {
 
     private RecyclerView recyclerViewBirds;
     private BirdsAdapter adapter;
-    private BirdsDatabase birdsDatabase;
+    private StorageViewModel viewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_storage);
-        birdsDatabase = BirdsDatabase.getInstance(getApplication());
+        viewModel = new ViewModelProvider(this).get(StorageViewModel.class);
 
         initView();
         initAction();
@@ -49,7 +50,7 @@ public class StorageActivity extends AppCompatActivity {
         adapter = new BirdsAdapter();
         recyclerViewBirds.setAdapter(adapter);
 
-        birdsDatabase.birdsDao().getBirds().observe(this, new Observer<List<Bird>>() {
+        viewModel.getBirds().observe(this, new Observer<List<Bird>>() {
             @Override
             public void onChanged(List<Bird> birds) {
                 adapter.setBirds(birds);
@@ -76,14 +77,8 @@ public class StorageActivity extends AppCompatActivity {
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
                 int position = viewHolder.getAdapterPosition();
                 Bird bird = adapter.getBirds().get(position);
+                viewModel.remove(bird);
 
-                Thread thread = new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        birdsDatabase.birdsDao().remove(bird.getId());
-                    }
-                });
-                thread.start();
             }
         });
 

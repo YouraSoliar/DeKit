@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.Manifest;
 import android.app.ActionBar;
@@ -52,10 +53,9 @@ public class MainActivity extends AppCompatActivity {
     private LinearLayout linearLayoutResult;
     private ImageView imageBird;
     private Bitmap imageBitmap;
-    private BirdsDatabase birdsDatabase;
-    private Handler handler = new Handler(Looper.getMainLooper());
-    ActivityResultLauncher<Intent> activityResultLauncher;
     ActivityResultLauncher<String> mGetContent;
+
+    private MainViewModel viewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         getPermission();
         compressPNG();
-        birdsDatabase = BirdsDatabase.getInstance(getApplication());
+        viewModel = new ViewModelProvider(this).get(MainViewModel.class);
 
         initView();
         initAction();
@@ -159,21 +159,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void saveBird() {
-        Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                String imageSource = Converter.fromBitmap(imageBitmap);
-                birdsDatabase.birdsDao().add(new Bird(textViewResult.getText().toString(), imageSource));
-                handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        Toast.makeText(MainActivity.this, "Saved", Toast.LENGTH_SHORT).show();
-                        textViewSave.setVisibility(View.GONE);
-                    }
-                });
-            }
-        });
-        thread.start();
+        String imageSource = Converter.fromBitmap(imageBitmap);
+        viewModel.add(new Bird(textViewResult.getText().toString(), imageSource));
+        Toast.makeText(MainActivity.this, "Saved", Toast.LENGTH_SHORT).show();
+        textViewSave.setVisibility(View.GONE);
     }
 
     @Override
