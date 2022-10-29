@@ -8,15 +8,18 @@ import androidx.room.Query;
 
 import java.util.List;
 
+import io.reactivex.rxjava3.core.Completable;
+import io.reactivex.rxjava3.core.Single;
+
 @Dao
 public interface BirdsDao {
 
     @Query("SELECT * FROM birds")
-    LiveData<List<Bird>> getBirds();
+    Single<List<Bird>> getBirds();
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void add (Bird bird);
+    Completable add (Bird bird);
 
     @Query("DELETE FROM birds WHERE id=:id")
-    void remove(int id);
+    Completable remove(int id);
 }

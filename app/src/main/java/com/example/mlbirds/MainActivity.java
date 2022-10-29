@@ -161,7 +161,6 @@ public class MainActivity extends AppCompatActivity {
     private void saveBird() {
         String imageSource = Converter.fromBitmap(imageBitmap);
         viewModel.add(new Bird(textViewResult.getText().toString(), imageSource));
-        Toast.makeText(MainActivity.this, "Saved", Toast.LENGTH_SHORT).show();
         textViewSave.setVisibility(View.GONE);
     }
 

@@ -96,6 +96,12 @@ public class StorageActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onResume() {
+        viewModel.refreshList();
+        super.onResume();
+    }
+
+    @Override
     public void finish() {
         super.finish();
         overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
