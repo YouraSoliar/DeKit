@@ -144,10 +144,12 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         if (requestCode == 12) {
-            imageBitmap = (Bitmap) data.getExtras().get("data");
-            imageBird.setImageBitmap(imageBitmap);
-            Bitmap bmp = imageBitmap.copy(Bitmap.Config.ARGB_8888,true) ;
-            outputGenerator(bmp);
+            if (data != null) {
+                imageBitmap = (Bitmap) data.getExtras().get("data");
+                imageBird.setImageBitmap(imageBitmap);
+                Bitmap bmp = imageBitmap.copy(Bitmap.Config.ARGB_8888,true) ;
+                outputGenerator(bmp);
+            }
         }
         super.onActivityResult(requestCode, resultCode, data);
     }

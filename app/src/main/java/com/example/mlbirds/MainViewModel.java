@@ -19,15 +19,10 @@ public class MainViewModel extends AndroidViewModel {
 
     private BirdsDao birdsDao;
     private CompositeDisposable compositeDisposable = new CompositeDisposable();
-    private MutableLiveData<Boolean> isFinish = new MutableLiveData<>();
 
     public MainViewModel(@NonNull Application application) {
         super(application);
         birdsDao = BirdsDatabase.getInstance(application).birdsDao();
-    }
-
-    public LiveData<Boolean> getIsFinish() {
-        return isFinish;
     }
 
     public void add (Bird bird) {
@@ -37,7 +32,6 @@ public class MainViewModel extends AndroidViewModel {
                 .subscribe(new Action() {
                     @Override
                     public void run() throws Throwable {
-                        isFinish.postValue(true);
                         Toast.makeText(getApplication(), "Saved", Toast.LENGTH_SHORT).show();
                     }
                 });
