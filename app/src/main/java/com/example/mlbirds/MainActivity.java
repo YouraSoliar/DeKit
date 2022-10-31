@@ -46,6 +46,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
+    private final int CODE_CAMERA = 101;
     private Button buttonLoadPhoto;
     private Button buttonTakePhoto;
     private TextView textViewSave;
@@ -129,7 +130,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                startActivityForResult(intent, 12);
+                startActivityForResult(intent, CODE_CAMERA);
             }
         });
 
@@ -143,7 +144,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        if (requestCode == 12) {
+        if (requestCode == CODE_CAMERA) {
             if (data != null) {
                 imageBitmap = (Bitmap) data.getExtras().get("data");
                 imageBird.setImageBitmap(imageBitmap);

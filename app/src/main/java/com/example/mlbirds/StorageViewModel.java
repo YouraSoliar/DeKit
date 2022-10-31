@@ -1,6 +1,7 @@
 package com.example.mlbirds;
 
 import android.app.Application;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -40,6 +41,11 @@ public class StorageViewModel extends AndroidViewModel {
                     public void accept(List<Bird> birdsFromDb) throws Throwable {
                         birds.setValue(birdsFromDb);
                     }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Throwable {
+                        Log.e("ErrorMessage", throwable.getMessage());
+                    }
                 });
         compositeDisposable.add(disposable);
     }
@@ -52,6 +58,11 @@ public class StorageViewModel extends AndroidViewModel {
                     @Override
                     public void run() throws Throwable {
                         refreshList();
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Throwable {
+                        Log.e("ErrorMessage", throwable.getMessage());
                     }
                 });
         compositeDisposable.add(disposable);

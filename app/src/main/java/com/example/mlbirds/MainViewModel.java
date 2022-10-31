@@ -1,6 +1,7 @@
 package com.example.mlbirds;
 
 import android.app.Application;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -13,6 +14,7 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.functions.Action;
+import io.reactivex.rxjava3.functions.Consumer;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class MainViewModel extends AndroidViewModel {
@@ -33,6 +35,11 @@ public class MainViewModel extends AndroidViewModel {
                     @Override
                     public void run() throws Throwable {
                         Toast.makeText(getApplication(), "Saved", Toast.LENGTH_SHORT).show();
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Throwable {
+                        Log.e("ErrorMessage", throwable.getMessage());
                     }
                 });
         compositeDisposable.add(disposable);
