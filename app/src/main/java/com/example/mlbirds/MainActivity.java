@@ -99,15 +99,16 @@ public class MainActivity extends AppCompatActivity {
             public void onActivityResult(Uri result) {
                 imageBitmap = null;
                 try{
-                    imageBitmap = UriToBitmap(result);
+                    if (result != null) {
+                        imageBitmap = UriToBitmap(result);
+                        imageBird.setImageBitmap(imageBitmap);
+                        outputGenerator(imageBitmap);
+
+                        Log.d("TAG_URI", result + "");
+                    }
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-
-                imageBird.setImageBitmap(imageBitmap);
-                outputGenerator(imageBitmap);
-
-                Log.d("TAG_URI", result + "");
             }
         });
 
