@@ -1,4 +1,4 @@
-package com.example.mlbirds;
+package com.example.dekit;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
@@ -15,11 +15,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Toast;
 
 import java.util.List;
 

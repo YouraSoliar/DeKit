@@ -1,4 +1,4 @@
-package com.example.mlbirds;
+package com.example.dekit;
 
 import android.app.Application;
 

@@ -1,4 +1,4 @@
-package com.example.mlbirds;
+package com.example.dekit;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,7 +8,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;

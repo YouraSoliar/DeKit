@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "601693034852",
+    "project_id": "dekit-cbc06",
+    "storage_bucket": "dekit-cbc06.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:601693034852:android:b052d5d81561b57c874271",
+        "android_client_info": {
+          "package_name": "com.example.dekit"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "601693034852-ia5tlftts37lvfdlr6kma3emtrrtqfjm.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.dekit",
+            "certificate_hash": "6562415f1526c74c93e3ce0e2cd251953107d665"
+          }
+        },
+        {
+          "client_id": "601693034852-sdo86uq2n3hmpk3k87hi2okq7017iq7b.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAkuSaijXqFVVhkgsCFnIHN2iN8KfkdGds"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "601693034852-sdo86uq2n3hmpk3k87hi2okq7017iq7b.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

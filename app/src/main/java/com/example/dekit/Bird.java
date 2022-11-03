@@ -1,6 +1,4 @@
-package com.example.mlbirds;
-
-import android.graphics.Bitmap;
+package com.example.dekit;
 
 import androidx.room.Entity;
 import androidx.room.Ignore;

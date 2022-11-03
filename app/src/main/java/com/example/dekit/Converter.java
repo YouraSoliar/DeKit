@@ -1,10 +1,8 @@
-package com.example.mlbirds;
+package com.example.dekit;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Base64;
-import android.util.Log;
-import android.widget.Toast;
 
 import androidx.room.TypeConverter;
 

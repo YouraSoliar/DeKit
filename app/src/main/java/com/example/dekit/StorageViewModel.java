@@ -1,14 +1,14 @@
-package com.example.mlbirds;
+package com.example.dekit;
 
 import android.app.Application;
 import android.util.Log;
-import android.view.View;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+
+import java.util.List;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
@@ -17,24 +17,47 @@ import io.reactivex.rxjava3.functions.Action;
 import io.reactivex.rxjava3.functions.Consumer;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
-public class MainViewModel extends AndroidViewModel {
+public class StorageViewModel extends AndroidViewModel {
 
-    private BirdsDao birdsDao;
+    private BirdsDatabase birdsDatabase;
     private CompositeDisposable compositeDisposable = new CompositeDisposable();
+    private MutableLiveData<List<Bird>> birds = new MutableLiveData<>();
 
-    public MainViewModel(@NonNull Application application) {
+    public StorageViewModel(@NonNull Application application) {
         super(application);
-        birdsDao = BirdsDatabase.getInstance(application).birdsDao();
+        birdsDatabase = BirdsDatabase.getInstance(application);
     }
 
-    public void add (Bird bird) {
-        Disposable disposable = birdsDao.add(bird)
+    public LiveData<List<Bird>> getBirds() {
+        return birds;
+    }
+
+    public void refreshList() {
+        Disposable disposable = birdsDatabase.birdsDao().getBirds()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<List<Bird>>() {
+                    @Override
+                    public void accept(List<Bird> birdsFromDb) throws Throwable {
+                        birds.setValue(birdsFromDb);
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Throwable {
+                        Log.e("ErrorMessage", throwable.getMessage());
+                    }
+                });
+        compositeDisposable.add(disposable);
+    }
+
+    public void remove(Bird bird) {
+        Disposable disposable = birdsDatabase.birdsDao().remove(bird.getId())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action() {
                     @Override
                     public void run() throws Throwable {
-                        Toast.makeText(getApplication(), "Saved", Toast.LENGTH_SHORT).show();
+                        refreshList();
                     }
                 }, new Consumer<Throwable>() {
                     @Override
