@@ -14,8 +14,7 @@ public class Converter {
     public static Bitmap toBitmap(String encodedString) {
         try {
             byte[] encodeByte = Base64.decode(encodedString, Base64.DEFAULT);
-            Bitmap bitmap = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
-            return bitmap;
+            return BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
 
         } catch (Exception e) {
             e.getMessage();
@@ -29,12 +28,7 @@ public class Converter {
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream);
 
         byte[] bytes = outputStream.toByteArray();
-        String temp = Base64.encodeToString(bytes, Base64.DEFAULT);
-        if (temp == null) {
-            return null;
-        } else {
-            return temp;
-        }
+        return Base64.encodeToString(bytes, Base64.DEFAULT);
 
     }
 }
