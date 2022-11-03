@@ -8,6 +8,9 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.example.mlbirds.data.room.enteties.Bird;
+import com.example.mlbirds.data.room.BirdsDatabase;
+
 import java.util.List;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;

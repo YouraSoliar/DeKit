@@ -8,8 +8,10 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.mlbirds.data.room.enteties.Bird;
+import com.example.mlbirds.util.Converter;
 
 import java.util.ArrayList;
 import java.util.List;

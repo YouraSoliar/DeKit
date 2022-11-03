@@ -2,13 +2,14 @@ package com.example.mlbirds;
 
 import android.app.Application;
 import android.util.Log;
-import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
+
+import com.example.mlbirds.data.room.enteties.Bird;
+import com.example.mlbirds.data.room.BirdsDatabase;
+import com.example.mlbirds.data.room.dao.BirdsDao;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
