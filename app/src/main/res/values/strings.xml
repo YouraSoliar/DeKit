@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Birds Finder</string>
+    <string name="app_name">DeKit</string>
 
     <string name="dummy_text">Dummy Text 2</string>
     <string name="load_image">Load Photo</string>
