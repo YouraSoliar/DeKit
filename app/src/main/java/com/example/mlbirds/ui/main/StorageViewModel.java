@@ -1,4 +1,4 @@
-package com.example.mlbirds;
+package com.example.mlbirds.ui.main;
 
 import android.app.Application;
 import android.util.Log;

@@ -1,4 +1,4 @@
-package com.example.mlbirds;
+package com.example.mlbirds.ui.main;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.mlbirds.R;
 import com.example.mlbirds.data.room.enteties.Bird;
 import com.example.mlbirds.util.Converter;
 

@@ -1,4 +1,4 @@
-package com.example.mlbirds;
+package com.example.mlbirds.ui.main;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
@@ -17,6 +17,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
 
+import com.example.mlbirds.R;
 import com.example.mlbirds.data.room.enteties.Bird;
 
 import java.util.List;
