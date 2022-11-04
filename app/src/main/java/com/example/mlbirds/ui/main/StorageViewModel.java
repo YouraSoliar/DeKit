@@ -12,6 +12,7 @@ import com.example.mlbirds.data.room.enteties.Bird;
 import com.example.mlbirds.data.room.BirdsDatabase;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
@@ -38,18 +39,9 @@ public class StorageViewModel extends AndroidViewModel {
     public void refreshList() {
         Disposable disposable = birdsDatabase.birdsDao().getBirds()
                 .subscribeOn(Schedulers.io())
+                .delay(400, TimeUnit.MILLISECONDS)
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<List<Bird>>() {
-                    @Override
-                    public void accept(List<Bird> birdsFromDb) throws Throwable {
-                        birds.setValue(birdsFromDb);
-                    }
-                }, new Consumer<Throwable>() {
-                    @Override
-                    public void accept(Throwable throwable) throws Throwable {
-                        Log.e("ErrorMessage", throwable.getMessage());
-                    }
-                });
+                .subscribe(birdsFromDb -> birds.setValue(birdsFromDb), throwable -> Log.e("ErrorMessage", throwable.getMessage()));
         compositeDisposable.add(disposable);
     }
 
