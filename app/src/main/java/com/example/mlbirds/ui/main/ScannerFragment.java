@@ -93,7 +93,7 @@ public class ScannerFragment extends BaseFragment {
 
     private void outputGenerator(Bitmap imageBitmap) {
         try {
-            BirdsModel model = BirdsModel.newInstance(getMainActivity());
+            BirdsModel model = BirdsModel.newInstance(requireContext());
 
             // Creates inputs for reference.
             TensorImage image = TensorImage.fromBitmap(imageBitmap);
