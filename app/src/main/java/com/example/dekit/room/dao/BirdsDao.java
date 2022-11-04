@@ -1,13 +1,10 @@
-<<<<<<<< HEAD:app/src/main/java/com/example/mlbirds/data/room/dao/BirdsDao.java
-package com.example.mlbirds.data.room.dao;
-========
-package com.example.dekit;
->>>>>>>> master:app/src/main/java/com/example/dekit/BirdsDao.java
+package com.example.dekit.room.dao;
 
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
+
 
 import com.example.dekit.room.enteties.Bird;
 
@@ -23,7 +20,7 @@ public interface BirdsDao {
     Single<List<Bird>> getBirds();
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    Completable add (Bird bird);
+    Completable add(Bird bird);
 
     @Query("DELETE FROM birds WHERE id=:id")
     Completable remove(int id);

@@ -25,7 +25,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
-import com.example.mlbirds.R;
+import com.example.dekit.R;
 import com.example.dekit.ui.base.BaseActivity;
 import com.example.dekit.ui.main.scanner.ScannerFragment;
 import com.example.dekit.ui.main.storage.StorageFragment;

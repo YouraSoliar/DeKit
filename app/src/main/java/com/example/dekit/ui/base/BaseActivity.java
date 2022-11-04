@@ -5,7 +5,7 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
-import com.example.mlbirds.R;
+import com.example.dekit.R;
 
 public class BaseActivity extends AppCompatActivity {
 

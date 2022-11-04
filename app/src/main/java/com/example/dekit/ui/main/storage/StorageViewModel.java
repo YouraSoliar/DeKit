@@ -1,8 +1,4 @@
-<<<<<<<< HEAD:app/src/main/java/com/example/mlbirds/ui/main/storage/StorageViewModel.java
-package com.example.mlbirds.ui.main.storage;
-========
-package com.example.dekit;
->>>>>>>> master:app/src/main/java/com/example/dekit/StorageViewModel.java
+package com.example.dekit.ui.main.storage;
 
 import android.app.Application;
 import android.util.Log;
@@ -53,17 +49,7 @@ public class StorageViewModel extends AndroidViewModel {
         Disposable disposable = birdsDatabase.birdsDao().remove(bird.getId())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action() {
-                    @Override
-                    public void run() throws Throwable {
-                        refreshList();
-                    }
-                }, new Consumer<Throwable>() {
-                    @Override
-                    public void accept(Throwable throwable) throws Throwable {
-                        Log.e("ErrorMessage", throwable.getMessage());
-                    }
-                });
+                .subscribe(this::refreshList, throwable -> Log.e("ErrorMessage", throwable.getMessage()));
         compositeDisposable.add(disposable);
     }
 

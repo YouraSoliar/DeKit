@@ -1,8 +1,4 @@
-<<<<<<<< HEAD:app/src/main/java/com/example/mlbirds/data/room/enteties/Bird.java
-package com.example.mlbirds.data.room.enteties;
-========
-package com.example.dekit;
->>>>>>>> master:app/src/main/java/com/example/dekit/Bird.java
+package com.example.dekit.room.enteties;
 
 import androidx.room.Entity;
 import androidx.room.Ignore;

@@ -13,9 +13,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.dekit.databinding.FragmentScannerBinding;
 import com.example.dekit.room.enteties.Bird;
-import com.example.mlbirds.databinding.FragmentScannerBinding;
-import com.example.mlbirds.ml.BirdsModel;
+import com.example.dekit.ml.BirdsModel;
 import com.example.dekit.ui.base.BaseFragment;
 import com.example.dekit.util.Converter;
 
@@ -29,7 +29,7 @@ import java.util.List;
 public class ScannerFragment extends BaseFragment {
     private Bitmap imageBitmap;
 
-    private MainViewModel viewModel;
+    private ScannerViewModel viewModel;
     private FragmentScannerBinding binding;
 
     @Nullable
@@ -47,7 +47,7 @@ public class ScannerFragment extends BaseFragment {
 
     private void init() {
         compressPNG();
-        viewModel = new ViewModelProvider(this).get(MainViewModel.class);
+        viewModel = new ViewModelProvider(this).get(ScannerViewModel.class);
 
         initListeners();
     }

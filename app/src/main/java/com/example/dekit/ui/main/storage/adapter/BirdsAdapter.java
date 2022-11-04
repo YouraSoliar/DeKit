@@ -1,8 +1,4 @@
-<<<<<<<< HEAD:app/src/main/java/com/example/mlbirds/ui/main/storage/adapter/BirdsAdapter.java
-package com.example.mlbirds.ui.main.storage.adapter;
-========
-package com.example.dekit;
->>>>>>>> master:app/src/main/java/com/example/dekit/BirdsAdapter.java
+package com.example.dekit.ui.main.storage.adapter;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,7 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.mlbirds.R;
+import com.example.dekit.R;
 import com.example.dekit.room.enteties.Bird;
 import com.example.dekit.util.Converter;
 
