@@ -5,7 +5,9 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.CursorWindow;
 import android.graphics.Bitmap;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -18,7 +20,10 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
 
 import com.example.mlbirds.R;
 import com.example.mlbirds.ui.base.BaseActivity;
@@ -30,6 +35,7 @@ import java.util.Objects;
 public class MainActivity extends BaseActivity {
 
     private final int CODE_CAMERA = 101;
+    private Menu menu;
 
     //todo move to intent utils
     public void openGallery() {
@@ -42,6 +48,12 @@ public class MainActivity extends BaseActivity {
     }
 
     ActivityResultLauncher<String> mGetContent;
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        configureToolbar();
+    }
 
     //todo move to file utils
     private OnImagePickedListener onImagePickedListener;
@@ -59,11 +71,21 @@ public class MainActivity extends BaseActivity {
     }
 
     private void init() {
+        initToolbar();
         getPermission();
         compressPNG();
         initGalleryListener();
-        Objects.requireNonNull(getSupportActionBar()).setBackgroundDrawable(new ColorDrawable(getColor(R.color.green)));
         openScannerFragment();
+    }
+
+    private void initToolbar() {
+        ActionBar actionBar = Objects.requireNonNull(getSupportActionBar());
+        actionBar.setBackgroundDrawable(new ColorDrawable(getColor(R.color.green)));
+        actionBar.setDisplayHomeAsUpEnabled(false);
+        final Drawable upArrow = ContextCompat.getDrawable(this, R.drawable.ic_baseline_arrow_back_24);
+        assert upArrow != null;
+        upArrow.setColorFilter(getResources().getColor(R.color.black), PorterDuff.Mode.SRC_ATOP);
+        actionBar.setHomeAsUpIndicator(upArrow);
     }
 
     //todo move to intent utils
@@ -126,6 +148,7 @@ public class MainActivity extends BaseActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        this.menu = menu;
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu, menu);
         return super.onCreateOptionsMenu(menu);
@@ -134,9 +157,9 @@ public class MainActivity extends BaseActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.next_page) {
-            startActivity(StorageActivity.getIntent(this));
-            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-        }
+            openStorageFragment();
+        } else if (item.getItemId() == android.R.id.home)
+            onBackPressed();
         return super.onOptionsItemSelected(item);
     }
 
@@ -153,5 +176,23 @@ public class MainActivity extends BaseActivity {
     //-- NAVIGATION --//
     public void openScannerFragment() {
         replaceFragment(new ScannerFragment());
+    }
+
+    public void openStorageFragment() {
+        setVisibilityNextPageBtn(false);
+        addFragment(new StorageFragment());
+    }
+
+    private void configureToolbar() {
+        Fragment fragment = getCurrentFragment();
+        if (fragment instanceof ScannerFragment) {
+            setVisibilityNextPageBtn(true);
+        }
+    }
+
+    private void setVisibilityNextPageBtn(Boolean visibility) {
+        MenuItem item = menu.getItem(0);
+        item.setVisible(visibility);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(!visibility);
     }
 }
