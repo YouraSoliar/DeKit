@@ -21,14 +21,12 @@ public class BaseActivity extends AppCompatActivity {
 
     protected void replaceFragment(Fragment fragment) {
         getSupportFragmentManager().beginTransaction()
-                /* .setCustomAnimations(
-                         R.anim.slide_in_left,
-                         R.anim.slide_out_right,
-                         R.anim.slide_in_right,
-                         R.anim.slide_out_left
-                 )
-
-                 */
+                .setCustomAnimations(
+                        R.anim.slide_in_left,
+                        R.anim.slide_out_right,
+                        R.anim.slide_in_right,
+                        R.anim.slide_out_left
+                )
                 .replace(R.id.fragment_container, fragment)
                 .addToBackStack(null)
                 .commit();
@@ -46,15 +44,12 @@ public class BaseActivity extends AppCompatActivity {
 
     protected void addFragment(Fragment fragment) {
         getSupportFragmentManager().beginTransaction()
-                /*
                 .setCustomAnimations(
                         R.anim.slide_in_left,
                         R.anim.slide_out_right,
                         R.anim.slide_in_right,
                         R.anim.slide_out_left
                 )
-
-                 */
                 .add(R.id.fragment_container, fragment)
                 .addToBackStack(null)
                 .commit();
