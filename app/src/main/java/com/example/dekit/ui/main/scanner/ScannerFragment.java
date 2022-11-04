@@ -1,4 +1,4 @@
-package com.example.mlbirds.ui.main.scanner;
+package com.example.dekit.ui.main.scanner;
 
 import android.content.Intent;
 import android.database.CursorWindow;
@@ -13,11 +13,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.mlbirds.data.room.enteties.Bird;
+import com.example.dekit.room.enteties.Bird;
 import com.example.mlbirds.databinding.FragmentScannerBinding;
 import com.example.mlbirds.ml.BirdsModel;
-import com.example.mlbirds.ui.base.BaseFragment;
-import com.example.mlbirds.util.Converter;
+import com.example.dekit.ui.base.BaseFragment;
+import com.example.dekit.util.Converter;
 
 import org.tensorflow.lite.support.image.TensorImage;
 import org.tensorflow.lite.support.label.Category;

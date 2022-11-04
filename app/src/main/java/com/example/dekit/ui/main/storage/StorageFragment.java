@@ -1,4 +1,4 @@
-package com.example.mlbirds.ui.main.storage;
+package com.example.dekit.ui.main.storage;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -13,10 +13,10 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.mlbirds.data.room.enteties.Bird;
+import com.example.dekit.room.enteties.Bird;
 import com.example.mlbirds.databinding.FragmentStorageBinding;
-import com.example.mlbirds.ui.base.BaseFragment;
-import com.example.mlbirds.ui.main.storage.adapter.BirdsAdapter;
+import com.example.dekit.ui.base.BaseFragment;
+import com.example.dekit.ui.main.storage.adapter.BirdsAdapter;
 
 public class StorageFragment extends BaseFragment {
 

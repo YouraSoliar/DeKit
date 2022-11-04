@@ -1,8 +1,8 @@
-package com.example.mlbirds.ui.base;
+package com.example.dekit.ui.base;
 
 import androidx.fragment.app.Fragment;
 
-import com.example.mlbirds.ui.main.MainActivity;
+import com.example.dekit.ui.main.MainActivity;
 
 public class BaseFragment extends Fragment {
 

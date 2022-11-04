@@ -12,8 +12,8 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.example.mlbirds.data.room.enteties.Bird;
-import com.example.mlbirds.data.room.BirdsDatabase;
+import com.example.dekit.room.enteties.Bird;
+import com.example.dekit.room.BirdsDatabase;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;

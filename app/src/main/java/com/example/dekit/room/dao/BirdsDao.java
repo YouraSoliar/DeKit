@@ -9,7 +9,7 @@ import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
-import com.example.mlbirds.data.room.enteties.Bird;
+import com.example.dekit.room.enteties.Bird;
 
 import java.util.List;
 

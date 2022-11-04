@@ -1,4 +1,4 @@
-package com.example.mlbirds.ui.main;
+package com.example.dekit.ui.main;
 
 import android.Manifest;
 import android.content.Intent;
@@ -26,9 +26,9 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.example.mlbirds.R;
-import com.example.mlbirds.ui.base.BaseActivity;
-import com.example.mlbirds.ui.main.scanner.ScannerFragment;
-import com.example.mlbirds.ui.main.storage.StorageFragment;
+import com.example.dekit.ui.base.BaseActivity;
+import com.example.dekit.ui.main.scanner.ScannerFragment;
+import com.example.dekit.ui.main.storage.StorageFragment;
 
 import java.io.IOException;
 import java.lang.reflect.Field;

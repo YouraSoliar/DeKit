@@ -1,4 +1,4 @@
-package com.example.mlbirds.ui.base;
+package com.example.dekit.ui.base;
 
 import android.os.Bundle;
 

@@ -11,9 +11,9 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 
-import com.example.mlbirds.data.room.dao.BirdsDao;
-import com.example.mlbirds.util.Converter;
-import com.example.mlbirds.data.room.enteties.Bird;
+import com.example.dekit.room.dao.BirdsDao;
+import com.example.dekit.util.Converter;
+import com.example.dekit.room.enteties.Bird;
 
 @Database(entities = {Bird.class}, version = 4, exportSchema = false)
 @TypeConverters(Converter.class)

@@ -12,9 +12,9 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 <<<<<<<< HEAD:app/src/main/java/com/example/mlbirds/ui/main/scanner/MainViewModel.java
 
-import com.example.mlbirds.data.room.BirdsDatabase;
-import com.example.mlbirds.data.room.dao.BirdsDao;
-import com.example.mlbirds.data.room.enteties.Bird;
+import com.example.dekit.room.BirdsDatabase;
+import com.example.dekit.room.dao.BirdsDao;
+import com.example.dekit.room.enteties.Bird;
 ========
 >>>>>>>> master:app/src/main/java/com/example/dekit/MainViewModel.java
 

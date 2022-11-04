@@ -1,4 +1,4 @@
-package com.example.mlbirds.util;
+package com.example.dekit.util;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;

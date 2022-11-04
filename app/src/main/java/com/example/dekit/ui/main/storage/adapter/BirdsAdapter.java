@@ -15,8 +15,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mlbirds.R;
-import com.example.mlbirds.data.room.enteties.Bird;
-import com.example.mlbirds.util.Converter;
+import com.example.dekit.room.enteties.Bird;
+import com.example.dekit.util.Converter;
 
 import java.util.ArrayList;
 import java.util.List;
