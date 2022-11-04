@@ -84,16 +84,6 @@ public class StorageFragment extends BaseFragment {
     }
 
     @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                requireActivity().onBackPressed();
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
     public void onResume() {
         viewModel.refreshList();
         super.onResume();
