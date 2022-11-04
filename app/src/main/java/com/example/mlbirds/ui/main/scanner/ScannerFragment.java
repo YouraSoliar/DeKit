@@ -1,4 +1,4 @@
-package com.example.mlbirds.ui.main;
+package com.example.mlbirds.ui.main.scanner;
 
 import android.content.Intent;
 import android.database.CursorWindow;

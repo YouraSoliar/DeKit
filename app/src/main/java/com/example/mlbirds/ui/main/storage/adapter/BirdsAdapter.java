@@ -1,4 +1,4 @@
-package com.example.mlbirds.ui.main;
+package com.example.mlbirds.ui.main.storage.adapter;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -38,7 +38,7 @@ public class BirdsAdapter extends RecyclerView.Adapter<BirdsAdapter.BirdsViewHol
     @NonNull
     @Override
     public BirdsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.bird_item, parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.bird_item, parent, false);
         return new BirdsViewHolder(view);
     }
 
@@ -76,7 +76,7 @@ public class BirdsAdapter extends RecyclerView.Adapter<BirdsAdapter.BirdsViewHol
         }
     }
 
-    interface OnNoteClickListener {
+    public interface OnNoteClickListener {
         void onNoteClick(Bird bird);
     }
 }
