@@ -94,14 +94,15 @@ public class MainActivity extends BaseActivity {
     private void initGalleryListener() {
         mGetContent = registerForActivityResult(new ActivityResultContracts.GetContent(), result -> {
             Bitmap imageBitmap = null;
-            try {
-                imageBitmap = UriToBitmap(result);
-            } catch (IOException e) {
-                e.printStackTrace();
+            if (result != null) {
+                try {
+                    imageBitmap = UriToBitmap(result);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                onImagePickedListener.onImagePicked(imageBitmap);
             }
-
-            onImagePickedListener.onImagePicked(imageBitmap);
-
             Log.d("TAG_URI", result + "");
         });
     }
