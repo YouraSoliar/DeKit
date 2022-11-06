@@ -1,4 +1,4 @@
-package com.example.dekit;
+package com.example.dekit.ui.main.storage.adapter;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +9,10 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.dekit.R;
+import com.example.dekit.room.enteties.Bird;
+import com.example.dekit.util.Converter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +38,7 @@ public class BirdsAdapter extends RecyclerView.Adapter<BirdsAdapter.BirdsViewHol
     @NonNull
     @Override
     public BirdsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.bird_item, parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.bird_item, parent, false);
         return new BirdsViewHolder(view);
     }
 
@@ -45,12 +49,7 @@ public class BirdsAdapter extends RecyclerView.Adapter<BirdsAdapter.BirdsViewHol
         holder.textViewItem.setText(bird.getUrl());
         holder.imageViewItem.setImageBitmap(Converter.toBitmap(bird.getStringBitmap()));
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onNoteClickListener.onNoteClick(bird);
-            }
-        });
+        holder.itemView.setOnClickListener(view -> onNoteClickListener.onNoteClick(bird));
     }
 
     @Override
@@ -72,7 +71,7 @@ public class BirdsAdapter extends RecyclerView.Adapter<BirdsAdapter.BirdsViewHol
         }
     }
 
-    interface OnNoteClickListener {
+    public interface OnNoteClickListener {
         void onNoteClick(Bird bird);
     }
 }

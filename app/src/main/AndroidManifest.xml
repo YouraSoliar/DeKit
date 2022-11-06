@@ -15,11 +15,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MLBirds"
         tools:targetApi="31">
+
+
         <activity
-            android:name="com.example.dekit.StorageActivity"
-            android:exported="false" />
-        <activity
-            android:name="com.example.dekit.MainActivity"
+            android:name="com.example.dekit.ui.main.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

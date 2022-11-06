@@ -1,4 +1,4 @@
-package com.example.dekit;
+package com.example.dekit.room.enteties;
 
 import androidx.room.Entity;
 import androidx.room.Ignore;

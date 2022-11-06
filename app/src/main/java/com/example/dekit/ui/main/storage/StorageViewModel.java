@@ -1,4 +1,4 @@
-package com.example.dekit;
+package com.example.dekit.ui.main.storage;
 
 import android.app.Application;
 import android.util.Log;
@@ -8,7 +8,11 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.example.dekit.room.enteties.Bird;
+import com.example.dekit.room.BirdsDatabase;
+
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
@@ -35,18 +39,9 @@ public class StorageViewModel extends AndroidViewModel {
     public void refreshList() {
         Disposable disposable = birdsDatabase.birdsDao().getBirds()
                 .subscribeOn(Schedulers.io())
+                .delay(400, TimeUnit.MILLISECONDS)
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<List<Bird>>() {
-                    @Override
-                    public void accept(List<Bird> birdsFromDb) throws Throwable {
-                        birds.setValue(birdsFromDb);
-                    }
-                }, new Consumer<Throwable>() {
-                    @Override
-                    public void accept(Throwable throwable) throws Throwable {
-                        Log.e("ErrorMessage", throwable.getMessage());
-                    }
-                });
+                .subscribe(birdsFromDb -> birds.setValue(birdsFromDb), throwable -> Log.e("ErrorMessage", throwable.getMessage()));
         compositeDisposable.add(disposable);
     }
 
@@ -54,17 +49,7 @@ public class StorageViewModel extends AndroidViewModel {
         Disposable disposable = birdsDatabase.birdsDao().remove(bird.getId())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action() {
-                    @Override
-                    public void run() throws Throwable {
-                        refreshList();
-                    }
-                }, new Consumer<Throwable>() {
-                    @Override
-                    public void accept(Throwable throwable) throws Throwable {
-                        Log.e("ErrorMessage", throwable.getMessage());
-                    }
-                });
+                .subscribe(this::refreshList, throwable -> Log.e("ErrorMessage", throwable.getMessage()));
         compositeDisposable.add(disposable);
     }
 
