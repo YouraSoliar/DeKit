@@ -16,4 +16,8 @@
     <color name="green">#0db26e</color>
     <color name="light_green">#a5ffa5</color>
 
+    <color name="dekit_blue">#a2d0da</color>
+    <color name="dekit_gray">#272b2e</color>
+    <color name="dekit_light_blue">#a7dae2</color>
+
 </resources>
