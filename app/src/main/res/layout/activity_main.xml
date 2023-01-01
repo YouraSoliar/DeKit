@@ -16,4 +16,9 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <include
+        android:id="@+id/progress_container"
+        android:visibility="gone"
+        layout="@layout/widget_progress"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

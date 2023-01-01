@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
@@ -17,6 +18,8 @@ import com.example.dekit.databinding.FragmentStorageBinding;
 import com.example.dekit.room.enteties.Bird;
 import com.example.dekit.ui.base.BaseFragment;
 import com.example.dekit.ui.main.storage.adapter.BirdsAdapter;
+
+import java.util.List;
 
 public class StorageFragment extends BaseFragment {
 
@@ -47,7 +50,11 @@ public class StorageFragment extends BaseFragment {
     }
 
     private void initObservers() {
-        viewModel.getBirds().observe(getViewLifecycleOwner(), birds -> adapter.setBirds(birds));
+        getMainActivity().showProgressBarDialog();
+        viewModel.getBirds().observe(getViewLifecycleOwner(), (Observer<List<Bird>>) birds -> {
+            adapter.setBirds(birds);
+            getMainActivity().hideProgressBarDialog();
+        });
     }
 
 

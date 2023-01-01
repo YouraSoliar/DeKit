@@ -99,7 +99,7 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="@dimen/dp30"
-        android:background="@color/orange"
+        android:background="@drawable/bg_save_clickable"
         android:paddingStart="@dimen/dp20"
         android:paddingTop="@dimen/dp10"
         android:paddingEnd="@dimen/dp40"

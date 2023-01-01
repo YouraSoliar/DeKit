@@ -12,8 +12,10 @@
     <color name="blue">#0158cc</color>
     <color name="light_blue">#92a5f2</color>
     <color name="orange">#fcae25</color>
+    <color name="orange_60">#99fcae25</color>
     <color name="light_orange">#fdd69f</color>
     <color name="green">#0db26e</color>
     <color name="light_green">#a5ffa5</color>
-
+    <color name="rhino">#343760</color>
+    <color name="base_bg">#EEFBF9</color>
 </resources>

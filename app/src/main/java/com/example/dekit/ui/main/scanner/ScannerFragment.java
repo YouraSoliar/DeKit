@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.bumptech.glide.Glide;
 import com.example.dekit.databinding.FragmentScannerBinding;
 import com.example.dekit.room.enteties.Bird;
 import com.example.dekit.ml.BirdsModel;
@@ -79,7 +80,10 @@ public class ScannerFragment extends BaseFragment {
 
         getMainActivity().setOnImagePickedListener(bitmap -> {
             imageBitmap = bitmap;
-            binding.imageBird.setImageBitmap(imageBitmap);
+            Glide
+                    .with(requireContext())
+                    .load(imageBitmap)
+                    .into(binding.imageBird);
             Bitmap bmp = imageBitmap.copy(Bitmap.Config.ARGB_8888, true);
             outputGenerator(bmp);
         });
