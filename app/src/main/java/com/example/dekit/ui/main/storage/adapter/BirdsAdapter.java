@@ -10,6 +10,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.dekit.R;
 import com.example.dekit.room.enteties.Bird;
 import com.example.dekit.util.Converter;
@@ -47,7 +50,11 @@ public class BirdsAdapter extends RecyclerView.Adapter<BirdsAdapter.BirdsViewHol
         Bird bird = birds.get(position);
 
         holder.textViewItem.setText(bird.getUrl());
-        holder.imageViewItem.setImageBitmap(Converter.toBitmap(bird.getStringBitmap()));
+        Glide.with(holder.itemView.getContext())
+                .load("data:image/jpeg;base64," + bird.getStringBitmap())
+                .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.NONE))
+                .into(holder.imageViewItem);
+        //holder.imageViewItem.setImageBitmap(Converter.toBitmap(bird.getStringBitmap()));
 
         holder.itemView.setOnClickListener(view -> onNoteClickListener.onNoteClick(bird));
     }
