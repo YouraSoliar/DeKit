@@ -27,6 +27,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.dekit.R;
 import com.example.dekit.ui.base.BaseActivity;
+import com.example.dekit.ui.main.choose_type.ChooseTypeFragment;
 import com.example.dekit.ui.main.scanner.ScannerFragment;
 import com.example.dekit.ui.main.storage.StorageFragment;
 
@@ -77,7 +78,8 @@ public class MainActivity extends BaseActivity {
         getPermission();
         compressPNG();
         initGalleryListener();
-        openScannerFragment();
+        openChooseTypeFragment();
+        //openScannerFragment();
     }
 
     private void initToolbar() {
@@ -154,6 +156,8 @@ public class MainActivity extends BaseActivity {
         this.menu = menu;
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu, menu);
+        setVisibilityNextPageBtn(false);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -181,6 +185,10 @@ public class MainActivity extends BaseActivity {
         replaceFragment(new ScannerFragment());
     }
 
+    public void openChooseTypeFragment() {
+        replaceFragment(new ChooseTypeFragment());
+    }
+
     public void openStorageFragment() {
         setVisibilityNextPageBtn(false);
         addFragment(new StorageFragment());
@@ -190,7 +198,8 @@ public class MainActivity extends BaseActivity {
         Fragment fragment = getCurrentFragment();
         if (fragment instanceof ScannerFragment) {
             setVisibilityNextPageBtn(true);
-        }
+        } else
+            getSupportActionBar().setDisplayHomeAsUpEnabled(false);
     }
 
     private void setVisibilityNextPageBtn(Boolean visibility) {
