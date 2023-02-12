@@ -15,7 +15,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.bumptech.glide.Glide;
 import com.example.dekit.databinding.FragmentScannerBinding;
-import com.example.dekit.room.enteties.Bird;
+import com.example.dekit.data.room.enteties.Bird;
 import com.example.dekit.ml.BirdsModel;
 import com.example.dekit.ui.base.BaseFragment;
 import com.example.dekit.util.Converter;

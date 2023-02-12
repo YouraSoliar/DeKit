@@ -1,4 +1,4 @@
-package com.example.dekit.room;
+package com.example.dekit.data.room;
 
 import android.app.Application;
 
@@ -7,8 +7,8 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 
-import com.example.dekit.room.dao.BirdsDao;
-import com.example.dekit.room.enteties.Bird;
+import com.example.dekit.data.room.dao.BirdsDao;
+import com.example.dekit.data.room.enteties.Bird;
 import com.example.dekit.util.Converter;
 
 @Database(entities = {Bird.class}, version = 4, exportSchema = false)

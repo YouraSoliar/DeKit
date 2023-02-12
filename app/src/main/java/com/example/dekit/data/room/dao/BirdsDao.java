@@ -1,4 +1,4 @@
-package com.example.dekit.room.dao;
+package com.example.dekit.data.room.dao;
 
 import androidx.room.Dao;
 import androidx.room.Insert;
@@ -6,7 +6,7 @@ import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
 
-import com.example.dekit.room.enteties.Bird;
+import com.example.dekit.data.room.enteties.Bird;
 
 import java.util.List;
 

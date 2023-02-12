@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.dekit.databinding.FragmentStorageBinding;
-import com.example.dekit.room.enteties.Bird;
+import com.example.dekit.data.room.enteties.Bird;
 import com.example.dekit.ui.base.BaseFragment;
 import com.example.dekit.ui.main.storage.adapter.BirdsAdapter;
 
