@@ -27,6 +27,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.dekit.R;
 import com.example.dekit.ui.base.BaseActivity;
+import com.example.dekit.ui.main.choose_type.ChooseTypeFragment;
 import com.example.dekit.ui.main.scanner.ScannerFragment;
 import com.example.dekit.ui.main.storage.StorageFragment;
 
@@ -77,7 +78,7 @@ public class MainActivity extends BaseActivity {
         getPermission();
         compressPNG();
         initGalleryListener();
-        openScannerFragment();
+        openChooseTypeFragment();
     }
 
     private void initToolbar() {
@@ -154,6 +155,8 @@ public class MainActivity extends BaseActivity {
         this.menu = menu;
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu, menu);
+        setVisibilityNextPageBtn(false);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -177,8 +180,14 @@ public class MainActivity extends BaseActivity {
     }
 
     //-- NAVIGATION --//
-    public void openScannerFragment() {
-        replaceFragment(new ScannerFragment());
+    public void openScannerFragment(String path) {
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        setVisibilityNextPageBtn(true);
+        addFragment(new ScannerFragment(), ScannerFragment.getBundle(path));
+    }
+
+    public void openChooseTypeFragment() {
+        replaceFragment(new ChooseTypeFragment());
     }
 
     public void openStorageFragment() {
@@ -188,14 +197,19 @@ public class MainActivity extends BaseActivity {
 
     private void configureToolbar() {
         Fragment fragment = getCurrentFragment();
+        if (getSupportFragmentManager().getBackStackEntryCount() > 1)
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        else
+            getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+
         if (fragment instanceof ScannerFragment) {
             setVisibilityNextPageBtn(true);
-        }
+        } else
+            setVisibilityNextPageBtn(false);
     }
 
     private void setVisibilityNextPageBtn(Boolean visibility) {
         MenuItem item = menu.getItem(0);
         item.setVisible(visibility);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(!visibility);
     }
 }

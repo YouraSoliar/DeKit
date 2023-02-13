@@ -8,5 +8,8 @@
     <string name="click_to_search">Click on Result to search image on Google</string>
     <string name="default_image">default image</string>
     <string name="save">Save</string>
+    <string name="birds">Birds</string>
+    <string name="add">Add</string>
+    <string name="plants">Plants</string>
 
 </resources>

@@ -7,9 +7,9 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 
-import com.example.dekit.room.BirdsDatabase;
-import com.example.dekit.room.dao.BirdsDao;
-import com.example.dekit.room.enteties.Bird;
+import com.example.dekit.data.room.BirdsDatabase;
+import com.example.dekit.data.room.dao.BirdsDao;
+import com.example.dekit.data.room.enteties.Bird;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
@@ -18,6 +18,7 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class ScannerViewModel extends AndroidViewModel {
 
+    public String path;
     private BirdsDao birdsDao;
     private CompositeDisposable compositeDisposable = new CompositeDisposable();
 
