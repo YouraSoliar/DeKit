@@ -5,6 +5,7 @@ import android.database.CursorWindow;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,18 +15,23 @@ import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.bumptech.glide.Glide;
-import com.example.dekit.databinding.FragmentScannerBinding;
 import com.example.dekit.data.room.enteties.Bird;
-import com.example.dekit.ml.BirdsModel;
+import com.example.dekit.databinding.FragmentScannerBinding;
 import com.example.dekit.ui.base.BaseFragment;
 import com.example.dekit.util.Converter;
+import com.google.android.gms.common.internal.Preconditions;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.mlkit.common.model.LocalModel;
+import com.google.mlkit.vision.common.InputImage;
+import com.google.mlkit.vision.label.ImageLabel;
+import com.google.mlkit.vision.label.ImageLabeler;
+import com.google.mlkit.vision.label.ImageLabeling;
+import com.google.mlkit.vision.label.custom.CustomImageLabelerOptions;
 
-import org.tensorflow.lite.support.image.TensorImage;
-import org.tensorflow.lite.support.label.Category;
-
-import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.List;
+
+import kotlin.coroutines.CoroutineContext;
 
 public class ScannerFragment extends BaseFragment {
     private Bitmap imageBitmap;
@@ -85,7 +91,8 @@ public class ScannerFragment extends BaseFragment {
                     .load(imageBitmap)
                     .into(binding.imageBird);
             Bitmap bmp = imageBitmap.copy(Bitmap.Config.ARGB_8888, true);
-            outputGenerator(bmp);
+            test(bmp);
+            //outputGenerator(bmp);
         });
     }
 
@@ -95,40 +102,47 @@ public class ScannerFragment extends BaseFragment {
         binding.textViewSave.setVisibility(View.GONE);
     }
 
-    private void outputGenerator(Bitmap imageBitmap) {
+    private void test(Bitmap imageBitmap) {
+        LocalModel localModel = new LocalModel.Builder().setAssetFilePath("ml_models/PlantsModel.tflite").build();
+
+        CustomImageLabelerOptions customImageLabelerOptions = new CustomImageLabelerOptions.Builder(localModel).build();
+        Preconditions.checkNotNull(customImageLabelerOptions, "options cannot be null");
+        ImageLabeler labeler = ImageLabeling.getClient(
+                customImageLabelerOptions);
         try {
-            BirdsModel model = BirdsModel.newInstance(requireContext());
 
-            // Creates inputs for reference.
-            TensorImage image = TensorImage.fromBitmap(imageBitmap);
+            InputImage image =
+                    InputImage.fromBitmap(imageBitmap, 0);
+            labeler.process(image).addOnSuccessListener(new OnSuccessListener<List<ImageLabel>>() {
+                @Override
+                public void onSuccess(List<ImageLabel> imageLabels) {
+                    // Runs model inference and gets result.
+                    int index = 0;
+                    float max = imageLabels.get(0).getConfidence();
 
-            // Runs model inference and gets result.
-            BirdsModel.Outputs outputs = model.process(image);
-            List<Category> probability = outputs.getProbabilityAsCategoryList();
+                    for (int i = 0; i < imageLabels.size(); ++i) {
+                        if (max < imageLabels.get(i).getConfidence()) {
+                            max = imageLabels.get(i).getConfidence();
+                            index = i;
+                        }
+                    }
+                    ImageLabel label = imageLabels.get(index);
 
-            int index = 0;
-            float max = probability.get(0).getScore();
-
-            for (int i = 0; i < probability.size(); ++i) {
-                if (max < probability.get(i).getScore()) {
-                    max = probability.get(i).getScore();
-                    index = i;
+                    String name = label.getText().replace("_", " ");
+                    binding.linearLayoutResult.setVisibility(View.VISIBLE);
+                    binding.textViewResult.setText(name);
+                    if (!label.getText().equals("None")) {
+                        binding.textViewSave.setVisibility(View.VISIBLE);
+                    } else {
+                        binding.textViewSave.setVisibility(View.GONE);
+                    }
+                    labeler.close();
                 }
-            }
-
-            Category output = probability.get(index);
-            binding.linearLayoutResult.setVisibility(View.VISIBLE);
-            binding.textViewResult.setText(output.getLabel());
-            if (!output.getLabel().equals("None")) {
-                binding.textViewSave.setVisibility(View.VISIBLE);
-            } else {
-                binding.textViewSave.setVisibility(View.GONE);
-            }
-            // Releases model resources if no longer used.
-            model.close();
-        } catch (IOException e) {
-            e.printStackTrace();
+            });
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            Log.e("Error, image doesn't recognised", ex.toString());
+            labeler.close();
         }
-
     }
 }

@@ -78,8 +78,8 @@ public class MainActivity extends BaseActivity {
         getPermission();
         compressPNG();
         initGalleryListener();
-        openChooseTypeFragment();
-        //openScannerFragment();
+        //openChooseTypeFragment();
+        openScannerFragment();
     }
 
     private void initToolbar() {
