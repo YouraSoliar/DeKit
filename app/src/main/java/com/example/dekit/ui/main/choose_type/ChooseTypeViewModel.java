@@ -27,10 +27,10 @@ public class ChooseTypeViewModel extends AndroidViewModel {
 
     public void setData() {
         List<ChooseType> dataList = Arrays.asList(
-                new ChooseType(R.string.add, R.drawable.ic_add),
-                new ChooseType(R.string.birds, R.drawable.ic_bird),
-                new ChooseType(R.string.plants, R.drawable.ic_flower)
-                );
+                new ChooseType(R.string.add, R.drawable.ic_add, ""),
+                new ChooseType(R.string.birds, R.drawable.ic_bird, "BirdsModel.tflite"),
+                new ChooseType(R.string.plants, R.drawable.ic_flower, "PlantsModel.tflite")
+        );
         data.postValue(dataList);
     }
 

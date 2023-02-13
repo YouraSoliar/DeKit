@@ -18,6 +18,7 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class ScannerViewModel extends AndroidViewModel {
 
+    public String path;
     private BirdsDao birdsDao;
     private CompositeDisposable compositeDisposable = new CompositeDisposable();
 

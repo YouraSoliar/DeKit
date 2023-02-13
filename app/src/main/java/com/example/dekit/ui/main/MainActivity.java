@@ -78,8 +78,7 @@ public class MainActivity extends BaseActivity {
         getPermission();
         compressPNG();
         initGalleryListener();
-        //openChooseTypeFragment();
-        openScannerFragment();
+        openChooseTypeFragment();
     }
 
     private void initToolbar() {
@@ -181,8 +180,10 @@ public class MainActivity extends BaseActivity {
     }
 
     //-- NAVIGATION --//
-    public void openScannerFragment() {
-        replaceFragment(new ScannerFragment());
+    public void openScannerFragment(String path) {
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        setVisibilityNextPageBtn(true);
+        addFragment(new ScannerFragment(), ScannerFragment.getBundle(path));
     }
 
     public void openChooseTypeFragment() {
@@ -196,15 +197,19 @@ public class MainActivity extends BaseActivity {
 
     private void configureToolbar() {
         Fragment fragment = getCurrentFragment();
+        if (getSupportFragmentManager().getBackStackEntryCount() > 1)
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        else
+            getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+
         if (fragment instanceof ScannerFragment) {
             setVisibilityNextPageBtn(true);
         } else
-            getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+            setVisibilityNextPageBtn(false);
     }
 
     private void setVisibilityNextPageBtn(Boolean visibility) {
         MenuItem item = menu.getItem(0);
         item.setVisible(visibility);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(!visibility);
     }
 }

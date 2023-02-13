@@ -31,8 +31,6 @@ import com.google.mlkit.vision.label.custom.CustomImageLabelerOptions;
 import java.lang.reflect.Field;
 import java.util.List;
 
-import kotlin.coroutines.CoroutineContext;
-
 public class ScannerFragment extends BaseFragment {
     private Bitmap imageBitmap;
 
@@ -52,10 +50,23 @@ public class ScannerFragment extends BaseFragment {
         init();
     }
 
+    private static final String ML_PATH = "mlPath";
+    private static final String BASE_PATH = "ml_models/";
+
+    private void resumeBundle() {
+        viewModel.path = requireArguments().getString(ML_PATH);
+    }
+
+    public static Bundle getBundle(String path) {
+        Bundle bundle = new Bundle();
+        bundle.putString(ML_PATH, path);
+        return bundle;
+    }
+
     private void init() {
         compressPNG();
         viewModel = new ViewModelProvider(this).get(ScannerViewModel.class);
-
+        resumeBundle();
         initListeners();
     }
 
@@ -103,19 +114,20 @@ public class ScannerFragment extends BaseFragment {
     }
 
     private void test(Bitmap imageBitmap) {
-        LocalModel localModel = new LocalModel.Builder().setAssetFilePath("ml_models/PlantsModel.tflite").build();
+        LocalModel localModel = new LocalModel.Builder().setAssetFilePath(BASE_PATH + viewModel.path).build();
 
         CustomImageLabelerOptions customImageLabelerOptions = new CustomImageLabelerOptions.Builder(localModel).build();
         Preconditions.checkNotNull(customImageLabelerOptions, "options cannot be null");
         ImageLabeler labeler = ImageLabeling.getClient(
                 customImageLabelerOptions);
-        try {
 
-            InputImage image =
-                    InputImage.fromBitmap(imageBitmap, 0);
-            labeler.process(image).addOnSuccessListener(new OnSuccessListener<List<ImageLabel>>() {
-                @Override
-                public void onSuccess(List<ImageLabel> imageLabels) {
+        InputImage image =
+                InputImage.fromBitmap(imageBitmap, 0);
+        labeler.process(image).addOnSuccessListener(new OnSuccessListener<List<ImageLabel>>() {
+            @Override
+            public void onSuccess(List<ImageLabel> imageLabels) {
+                try {
+
                     // Runs model inference and gets result.
                     int index = 0;
                     float max = imageLabels.get(0).getConfidence();
@@ -137,12 +149,15 @@ public class ScannerFragment extends BaseFragment {
                         binding.textViewSave.setVisibility(View.GONE);
                     }
                     labeler.close();
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                    Log.e("Error, image doesn't recognised", ex.toString());
+                    labeler.close();
+                    binding.textViewResult.setText("None");
+                    binding.textViewSave.setVisibility(View.GONE);
                 }
-            });
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            Log.e("Error, image doesn't recognised", ex.toString());
-            labeler.close();
-        }
+            }
+        });
     }
 }
+

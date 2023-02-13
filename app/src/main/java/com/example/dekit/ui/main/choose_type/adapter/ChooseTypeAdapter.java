@@ -1,6 +1,9 @@
 package com.example.dekit.ui.main.choose_type.adapter;
 
+import android.annotation.SuppressLint;
+import android.graphics.PorterDuff;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -65,11 +68,24 @@ public class ChooseTypeAdapter extends RecyclerView.Adapter<ChooseTypeAdapter.Vi
             cardView.setOnClickListener(view -> onNoteClickListener.onNoteClick(data));
         }
 
+        @SuppressLint("ClickableViewAccessibility")
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             cardView = itemView.findViewById(R.id.card_view);
             icon = itemView.findViewById(R.id.icon);
             title = itemView.findViewById(R.id.title);
+
+            cardView.setOnTouchListener((v, event) -> {
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    v.getBackground().setColorFilter(-0x0db26edf, PorterDuff.Mode.SRC_ATOP);
+                    v.invalidate();
+                }
+                if (event.getAction() == MotionEvent.ACTION_UP) {
+                    v.getBackground().clearColorFilter();
+                    v.invalidate();
+                }
+                return false;
+            });
         }
     }
 

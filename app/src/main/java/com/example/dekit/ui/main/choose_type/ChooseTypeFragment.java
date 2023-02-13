@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -55,7 +56,10 @@ public class ChooseTypeFragment extends BaseFragment {
 
     private void initListeners() {
         adapter.setOnItemClickListener(data -> {
-            //todo open scanner fragment
+            if (!data.path.isEmpty())
+                getMainActivity().openScannerFragment(data.path);
+            else
+                Toast.makeText(requireContext(), "Sorry, this feature isn't ready for now", Toast.LENGTH_SHORT).show();
         });
     }
 }
